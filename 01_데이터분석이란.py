@@ -278,6 +278,51 @@ for lot in ("로트A", "로트B", "로트C"):
         for row in rows:
             if row[1] == lot and row[idx] != "":
                 vals.append(float(row[idx]))
-    print(
-        f"{lot:<5}{name:<6}{len(vals):>5}{round(sum(vals) / len(vals), 2):>10}{max(vals):>10}{min(vals):>10}"
-    )
+        print(
+            f"{lot:<5}{name:<6}{len(vals):>5}{round(sum(vals) / len(vals), 2):>10}{max(vals):>10}{min(vals):>10}"
+        )
+
+# ========================================================================
+# 10. 여기서 막힙니다. 빈칸이 섞이면 터뜨려 봅니다
+# ========================================================================
+with open(PROC, encoding="utf-8-sig") as f:
+    r = csv.reader(f)
+    dirty_header = next(r)
+    dirty_rows = list(r)
+
+print("=" * 60)
+print("[10] 빈 칸이 섞인 파일")
+print("행 수:", len(dirty_rows), " / 열 수:", len(dirty_header))
+print("열 이름:", dirty_header)
+
+for i in range(len(dirty_header)):
+    blank = 0
+    for row in dirty_rows:
+        if row[i] == "":
+            blank += 1
+    if blank > 0:
+        print(f"빈 칸 {blank:>2}개 - {dirty_header[i]}")
+
+print()
+print("[10-1] 방어 없이 평균을 내면")
+try:
+    op = [float(row[4]) for row in dirty_rows]
+    print("평균", sum(op) / len(op))
+except ValueError as e:
+    print("ValueError:", e)
+
+# ========================================================================
+# 11. 그래서 다음 시간에 Numpy Pandas를 배웁니다
+# ========================================================================
+
+"""
+데이터분석은 어디서나 같은 순서로 갑니다. 이 여섯 카은 외워 두세요.
+  수집   ->   전처리    ->    EDA      ->  모델링   ->  평가  ->   현장적용
+(모으고)     (청소하고)    (눈으로 보고)      (예측)     (검증)      (운영)
+수집 : 센서 MES(생산관리시스템) 품질검사 결과를 모아옵니다.
+전처리 : 결측치, 이상치, 단위를 정리합니다.
+EDA(Exploratory Data Analysis) : 그래프와 통계로 데이터를 눈으로 이해합니다.
+모델링 : 예측하는 규칙을 데이터에서 만들어 냅니다.
+평가 : 그 규칙이 쓸만한지 재 봅니다.
+현장적용 : 실제 공장에 걸어 두고 돌립니다. 여기서 또 문제가 나와 처음으로 돌아갑니다.
+"""
