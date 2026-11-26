@@ -145,10 +145,10 @@ print(
 )
 
 print(
-    f"③ {'소입로온도1존':<5}{'개수':<6}{'평균':>10}{'최대':>10}{'최소':>10}{'범위':>8}"
+    f"③ {'소입로온도1존':<5}{'개수':>6}{'평균':>10}{'최대':>10}{'최소':>10}{'범위':>8}"
 )
 print(
-    f"{'소입로온도1존':<5}{len(temps_zone1):<6}{round(mean_tz1, 2):>10}"
+    f"{'소입로온도1존':<5}{len(temps_zone1):>6}{round(mean_tz1, 2):>10}"
     f"{max(temps_zone1):>10}{min(temps_zone1):>10}"
     f"{round(max(temps_zone1) - min(temps_zone1), 2):>8}"
 )
